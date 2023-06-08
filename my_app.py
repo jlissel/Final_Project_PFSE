@@ -10,7 +10,6 @@ max_depth = st.sidebar.number_input("Maximum beam depth (mm)", value=1000)
 interval = st.sidebar.number_input("Depth step interval (mm)", value=100)
 L = st.sidebar.number_input("Length (mm)", value = 5000)
 b = st.sidebar.number_input("Width (mm)", value = 315)
-d = st.sidebar.number_input("Depth (mm)", value = 720)
 fb = st.sidebar.number_input("Specified bending strength (MPa)", value = 30.6)
 
 # K Factors
@@ -28,6 +27,8 @@ st.sidebar.subheader("Fire Parameters")
 t = st.sidebar.number_input("Fire Duration (min)", value=60)
 xt = st.sidebar.number_input("Zero strength layer depth (mm)", value=7)
 
+depth_input = st.number_input(label="Depth", min_value=min_depth, max_value=max_depth)
+
 # Calculation of "resistance lines"
 results = sam.bending_capacity_vs_depth(
     min_depth,
@@ -35,7 +36,7 @@ results = sam.bending_capacity_vs_depth(
     interval,
     L,
     b,
-    d,
+    depth_input,
     fb,
     kD,
     kH,
@@ -54,7 +55,7 @@ results_fire = sam.bending_capacity_vs_depth_fire(
     interval,
     L,
     b,
-    d,
+    depth_input,
     fb,
     kD,
     kH,
@@ -67,7 +68,7 @@ results_fire = sam.bending_capacity_vs_depth_fire(
     xt,
 )
 
-depth_input = st.number_input(label="Depth", min_value=min_depth, max_value=max_depth)
+
 
 # Calculation of individual point for plot marker and example calculations
 example_latex_a, factored_load_a = sam.calc_mr_at_given_depth(
